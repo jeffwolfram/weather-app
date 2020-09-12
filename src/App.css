@@ -2,9 +2,11 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.radial-button {
+  margin-right:2em;
+}
+.radial-container {
+  margin-bottom:1em;
 }
 
 @media (prefers-reduced-motion: no-preference) {
