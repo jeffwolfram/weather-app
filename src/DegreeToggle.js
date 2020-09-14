@@ -12,8 +12,9 @@ const DegreeToggle = ({degreeType, updateForcastDegree}) => {
                  className="form-check-input"
                  name="degree-type"
                  id="celsius"
-                 value="celsius"
-                //  onChange={updateForcastDegree}
+                 value="metric"
+                 checked={degreeType === "metric"}
+                 onChange={event => updateForcastDegree(event.target.value)}
                  
                  
                 />
@@ -25,8 +26,9 @@ const DegreeToggle = ({degreeType, updateForcastDegree}) => {
                 type="radio"
                 name="degree-type"
                 id="farenheit"
-                value="fahrenheit"
-                // onChange={updateForcastDegree}
+                value="imperial"
+                checked={degreeType === "imperial"}
+                onChange={event => updateForcastDegree(event.target.value)}
                 
                 
             />

@@ -4,31 +4,34 @@ import DegreeToggle from './DegreeToggle';
 
 class WeekContainer extends React.Component {
   state = {
-    fullData: [],
     dailyData: [], 
-    degreeType: "fahrenheit"
+    degreeType: "imperial"
   }
-  updateForcastDegree = event => {
-      this.setState({
-          degreeType: event.target.value
-      }, () => console.log("this" + this.state))
+  updateForcastDegree = newDegreeType => {
+    // let degrees = {...this.state.degreeType};
+    // degrees = event;
+      this.setState({ 
+        degreeType: newDegreeType
+      }, this.componentDidMount);
   }
 
   componentDidMount = () => {
     const weatherURL =
-    `http://api.openweathermap.org/data/2.5/forecast?zip=91504&units=imperial&appid=${process.env.REACT_APP_API_KEY}`
+    `http://api.openweathermap.org/data/2.5/forecast?zip=91504&units=${this.state.degreeType}&appid=${process.env.REACT_APP_API_KEY}`
     fetch(weatherURL)
     .then(res => res.json())
     .then(data => {
+      console.log("Data List Loaded", data.list)
       const dailyData = data.list.filter(reading => reading.dt_txt.includes("18:00:00"))
+      
       this.setState({
-        fullData: data.list,
+       
         dailyData: dailyData
       }, () => console.log(this.state))
     })
   }
   formatDayCards = () => {
-      return this.state.dailyData.map((reading, index) => <DayCard reading={reading} key={index} />)
+      return this.state.dailyData.map((reading, index) => <DayCard reading={reading} degreeType={this.state.degreeType} key={index} />)
   }
 
 
@@ -40,7 +43,7 @@ class WeekContainer extends React.Component {
         <h1 className="display-1 jumbotron text-center">5-Day Forecast.</h1>
         <h5 className="display-5  text-muted text-center">Burbank, California </h5>
         <br></br>
-        <div className="text-center"><DegreeToggle degreeType={this.state.degreeType} updateForecastDegree={this.updateForecastDegree} /></div>
+        <div className="text-center"><DegreeToggle degreeType={this.state.degreeType} updateForcastDegree={this.updateForcastDegree} /></div>
         
           <div className="row justify-content-center">
            
