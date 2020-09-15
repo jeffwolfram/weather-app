@@ -1,11 +1,16 @@
 import React from 'react';
 import DayCard from './DayCard'
 import DegreeToggle from './DegreeToggle';
+import City from './City'
+
+
 
 class WeekContainer extends React.Component {
+  
   state = {
     dailyData: [], 
-    degreeType: "imperial"
+    degreeType: "imperial",
+    city: "91504"
   }
   updateForcastDegree = newDegreeType => {
     // let degrees = {...this.state.degreeType};
@@ -14,10 +19,36 @@ class WeekContainer extends React.Component {
         degreeType: newDegreeType
       }, this.componentDidMount);
   }
+  addZipcode = zip => {
+    this.setState({
+      city: zip
+    }, this.componentDidMount,
+    console.log(this.state.city)
+    );
+  }
+
+  getNewZipCode = () => {
+    fetch(`https://redline-redline-zipcode.p.rapidapi.com/rest/multi-info.json/91504/degrees`, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "redline-redline-zipcode.p.rapidapi.com",
+        "x-rapidapi-key": `${process.env.REACT_APP_ZIP_KEY}`
+      }
+    })
+    .then(response => {
+      console.log("this");
+      console.log(response);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    console.log("Firing");
+  }
+
 
   componentDidMount = () => {
     const weatherURL =
-    `http://api.openweathermap.org/data/2.5/forecast?zip=91504&units=${this.state.degreeType}&appid=${process.env.REACT_APP_API_KEY}`
+    `http://api.openweathermap.org/data/2.5/forecast?zip=${this.state.city}&units=${this.state.degreeType}&appid=${process.env.REACT_APP_API_KEY}`
     fetch(weatherURL)
     .then(res => res.json())
     .then(data => {
@@ -40,8 +71,8 @@ class WeekContainer extends React.Component {
   render() {
     return (
         <div className="container">
-        <h1 className="display-1 jumbotron text-center">5-Day Forecast.</h1>
-        <h5 className="display-5  text-muted text-center">Burbank, California </h5>
+        <h1 className="display-1 jumbotron text-center">Burbank</h1>
+        <h5 className="display-5  text-muted text-center"><City addZipcode = {this.addZipcode} /> </h5>
         <br></br>
         <div className="text-center"><DegreeToggle degreeType={this.state.degreeType} updateForcastDegree={this.updateForcastDegree} /></div>
         

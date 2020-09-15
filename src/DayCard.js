@@ -18,9 +18,10 @@ const DayCard = ({reading, degreeType}) => {
                 <p className="card-text text-center">{moment(newDate).format('MMMM Do, h:mm a')}</p>
     <i className={imgURL} ></i>
     <h2>{degreeType === "metric" ? celsius + "°C" : fahrenheit + "°F"}</h2>
-    
-                <h2 className="text-center">{Math.round(reading.main.temp)} °F</h2>
                 <div className="card-body text-center">
+                    
+                    <p className="text-center card-text">Humidity: {reading.main.humidity} %</p>
+                    <p className="text-center card-text">Sea Level {reading.main.sea_level} </p>
                     <p className="card-text text-center">{reading.weather[0].description}</p>
                 </div>
             </div>
