@@ -7,8 +7,6 @@ createZip = (event) => {
     //1. stop the form from submitting
     event.preventDefault();
     const zip = this.zipRef.current.value
-    console.log("adding a zip");
-    console.log(zip);
    this.props.addZipcode(zip);
 }
 render() {
