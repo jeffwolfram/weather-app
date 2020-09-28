@@ -49,7 +49,7 @@ class WeekContainer extends React.Component {
     
 
   componentDidMount = () => {
-    if(this.forcastType === "five-day") {
+   
       const weatherURL =
       `http://api.openweathermap.org/data/2.5/forecast?zip=${this.state.city}&units=${this.state.degreeType}&appid=${process.env.REACT_APP_API_KEY}`
       fetch(weatherURL)
@@ -57,16 +57,6 @@ class WeekContainer extends React.Component {
       .then(data => {
       console.log("Data List Loaded", data.list)
       const dailyData = data.list.filter(reading => reading.dt_txt.includes("18:00:00"))
-      
-    } else{
-      const weatherURL =
-      `http://api.openweathermap.org/data/2.5/forecast?zip=${this.state.city}&units=${this.state.degreeType}&appid=${process.env.REACT_APP_API_KEY}`
-      fetch(weatherURL)
-      .then(res => res.json())
-      .then(data => {
-      console.log("Data List Loaded", data.list)
-      const dailyData = data.list.filter(reading => reading.dt_txt.includes("18:00:00"))
-    }
       this.setState({
        
         dailyData: dailyData
